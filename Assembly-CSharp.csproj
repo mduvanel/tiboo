@@ -61,6 +61,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Tests\NewTestScript.cs" />
+    <Compile Include="Assets\Scripts\Tests\TilesTest.cs" />
     <Compile Include="Assets\Scripts\Tile.cs" />
     <Compile Include="Assets\Scripts\TilesCreate.cs" />
     <Compile Include="Assets\Scripts\Wall.cs" />

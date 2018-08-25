@@ -18,10 +18,10 @@ namespace Tiboo
 		public enum Animal
 		{
 			OWL,
-			WORM,
+			FROG,
 			BAT,
-			FROG
-		}
+            CENTIPEDE
+        }
 
 		public enum Color
 		{
@@ -74,7 +74,7 @@ namespace Tiboo
 			case 4:
 			case 11:
 			case 13:
-				return Animal.FROG;
+                return Animal.FROG;
 			case 5:
 			case 6:
 			case 9:
@@ -89,7 +89,7 @@ namespace Tiboo
 			case 7:
 			case 8:
 			case 14:
-				return Animal.WORM;
+                return Animal.CENTIPEDE;
 			default:
 				throw new Exception("Invalid Tile index. X = " + x + ", Y = " + y);
 			}
