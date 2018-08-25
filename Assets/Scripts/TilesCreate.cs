@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Tiboo;
 
 public class TilesCreate : MonoBehaviour
 {    
@@ -14,41 +14,6 @@ public class TilesCreate : MonoBehaviour
     private const int m_width = 4;
 
     private Tile[,] m_tiles;
-
-    Tile.Color GetColor(int x, int y)
-    {
-        return (Tile.Color)((x + y) % 2);
-    }
-
-    Tile.Animal GetAnimal(int x, int y)
-    {
-        switch (x + m_width * y)
-        {
-        case 2:
-        case 4:
-        case 11:
-        case 13:
-            return Tile.Animal.FROG;
-        case 5:
-        case 6:
-        case 9:
-        case 10:
-            return Tile.Animal.BAT;
-        case 0:
-        case 3:
-        case 12:
-        case 15:
-            return Tile.Animal.OWL;
-        case 1:
-        case 7:
-        case 8:
-        case 14:
-            return Tile.Animal.WORM;
-        default:
-            throw new Exception("Invalid Tile index. X = " + x + ", Y = " + y);
-        }
-    }
-
 
 	// Use this for initialization
 	void Start()
@@ -66,7 +31,7 @@ public class TilesCreate : MonoBehaviour
         {
             for (int y = 0; y < m_height; y++)
             {
-                m_tiles[x, y] = new Tile(GetAnimal(x, y), GetColor(x, y));
+                m_tiles[x, y] = new Tile(Tile.GetAnimal(x, y, m_width), Tile.GetColor(x, y));
                 // GameObject assigned to public variable is cloned
                 GameObject tile = (GameObject)Instantiate(m_tile);
 

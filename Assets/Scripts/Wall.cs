@@ -2,46 +2,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wall
+namespace Tiboo
 {
-	enum WallType
+	public class Wall
 	{
-		OPEN,
-		RABBIT_HOLE,
-		MOUSE_HOLE,
-		MAGIC_DOOR,
-		CLOSED
-	}
-
-	private static Dictionary<WallType, int> WALLTYPE_COUNTS;
-
-	static Wall()
-	{
-		WALLTYPE_COUNTS = new Dictionary<WallType, int>()
+		enum WallType
 		{
-			{WallType.OPEN, 14},
-			{WallType.RABBIT_HOLE, 4},
-			{WallType.MOUSE_HOLE, 4},
-			{WallType.MAGIC_DOOR, 3},
-			{WallType.CLOSED, 2}
-		};
-	}
+			OPEN,
+			RABBIT_HOLE,
+			MOUSE_HOLE,
+			MAGIC_DOOR,
+			CLOSED
+		}
 
-	// Generate a random game board of 4 by 4 with the given number of magic doors
-	static void GenerateWalls(int magicDoors)
-	{
+		private static Dictionary<WallType, int> WALLTYPE_COUNTS;
 
-	}
+		static Wall()
+		{
+			WALLTYPE_COUNTS = new Dictionary<WallType, int>()
+			{
+				{WallType.OPEN, 14},
+				{WallType.RABBIT_HOLE, 4},
+				{WallType.MOUSE_HOLE, 4},
+				{WallType.MAGIC_DOOR, 3},
+				{WallType.CLOSED, 2}
+			};
+		}
 
-	// Use this for initialization
-	void Start ()
-	{
+		// Generate a random game board of 4 by 4 with the given number of magic doors
+		static void GenerateWalls(int magicDoors)
+		{
 
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
+		}
+
+		// Use this for initialization
+		void Start ()
+		{
+
+		}
 		
+		// Update is called once per frame
+		void Update ()
+		{
+			
+		}
 	}
 }
