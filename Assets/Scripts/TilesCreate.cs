@@ -10,10 +10,10 @@ public class TilesCreate : MonoBehaviour
     public GameObject m_tile;
     public Grid m_grid;
 
-    private Board m_board;
+    private readonly Board m_board;
 
-	// Use this for initialization
-	void Start()
+    // Use this for initialization
+    void Start()
     {
         Vector3 p1 = m_tile.transform.TransformPoint(0, 0, 0);
         Vector3 p2 = m_tile.transform.TransformPoint(1, 1, 0);
@@ -28,7 +28,7 @@ public class TilesCreate : MonoBehaviour
             for (int y = 0; y < m_board.Height; y++)
             {
                 // GameObject assigned to public variable is cloned
-                GameObject tile = (GameObject)Instantiate(m_tile);
+                GameObject tile = Instantiate(m_tile);
 
                 // Current position in grid
                 tile.transform.position = new Vector3(x * tileWidth, y * tileHeight, 0);

@@ -6,7 +6,7 @@ namespace Tiboo
 {
     public class Board
     {
-        private Tile[,] m_tiles;
+        private readonly Tile[,] m_tiles;
 
         public int Height { get; }
         public int Width { get; }
