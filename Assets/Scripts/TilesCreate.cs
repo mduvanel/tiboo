@@ -10,10 +10,7 @@ public class TilesCreate : MonoBehaviour
     public GameObject m_tile;
     public Grid m_grid;
 
-    private const int m_height = 4;
-    private const int m_width = 4;
-
-    private Tile[,] m_tiles;
+    private Board m_board;
 
 	// Use this for initialization
 	void Start()
@@ -25,13 +22,11 @@ public class TilesCreate : MonoBehaviour
         
         // GameObject which is the parent of all the tiles
         GameObject tileGrid = new GameObject("Grid");
-        m_tiles = new Tile[m_width, m_height];
 
-        for (int x = 0; x < m_width; x++)
+        for (int x = 0; x < m_board.Width; x++)
         {
-            for (int y = 0; y < m_height; y++)
+            for (int y = 0; y < m_board.Height; y++)
             {
-                m_tiles[x, y] = new Tile(Tile.GetAnimal(x, y, m_width), Tile.GetColor(x, y));
                 // GameObject assigned to public variable is cloned
                 GameObject tile = (GameObject)Instantiate(m_tile);
 
