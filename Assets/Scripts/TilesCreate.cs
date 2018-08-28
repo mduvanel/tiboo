@@ -10,11 +10,13 @@ public class TilesCreate : MonoBehaviour
     public GameObject m_tile;
     public Grid m_grid;
 
-    private readonly Board m_board;
+    private Board m_board;
 
     // Use this for initialization
     void Start()
     {
+        m_board = new Board();
+
         Vector3 p1 = m_tile.transform.TransformPoint(0, 0, 0);
         Vector3 p2 = m_tile.transform.TransformPoint(1, 1, 0);
         float tileWidth = p2.x - p1.x;

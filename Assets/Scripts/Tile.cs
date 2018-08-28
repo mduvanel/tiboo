@@ -7,7 +7,7 @@ namespace Tiboo
 {
 	public class Tile
 	{
-		enum Direction
+		public enum Direction
 		{
 			NORTH,
 			EAST,
@@ -36,30 +36,28 @@ namespace Tiboo
 
 		private Color m_color;
 		
-		public Tile(
-			Wall NorthWall,
-			Wall EastWall,
-			Wall SouthWall,
-			Wall WestWall,
-			Animal animal,
-			Color color
-		) {
-			m_walls = new Dictionary<Direction, Wall>()
-			{
-				{Direction.NORTH, NorthWall},
-				{Direction.EAST,  EastWall},
-				{Direction.SOUTH, SouthWall},
-				{Direction.WEST,  WestWall}
-			};
-			m_animal = animal;
+		public Tile(Animal animal, Color color)
+		{
+            m_walls = new Dictionary<Direction, Wall>()
+            {
+                { Direction.NORTH, null },
+                { Direction.EAST,  null },
+                { Direction.SOUTH, null },
+                { Direction.WEST,  null }
+            };
+            m_animal = animal;
 			m_color = color;
 		}
 
-		public Tile(Animal animal, Color color)
-		{
-			m_animal = animal;
-			m_color = color;
-		}
+        public void SetWall(Direction direction, Wall wall)
+        {
+            m_walls[direction] = wall;
+        }
+
+        public Wall GetWall(Direction direction)
+        {
+            return m_walls[direction];
+        }
 
 		public static Color GetColor(int x, int y)
 		{
@@ -93,18 +91,6 @@ namespace Tiboo
 			default:
 				throw new Exception("Invalid Tile index. X = " + x + ", Y = " + y);
 			}
-		}
-
-		// Use this for initialization
-		void Start ()
-		{
-			
-		}
-		
-		// Update is called once per frame
-		void Update ()
-		{
-			
 		}
 	}
 }

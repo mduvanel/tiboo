@@ -6,7 +6,7 @@ namespace Tiboo
 {
 	public class Wall
 	{
-		enum WallType
+		public enum Type
 		{
 			OPEN,
 			RABBIT_HOLE,
@@ -15,36 +15,31 @@ namespace Tiboo
 			CLOSED
 		}
 
-		private static Dictionary<WallType, int> WALLTYPE_COUNTS;
+		private static readonly Dictionary<Type, int> WALLTYPE_COUNTS;
+
+        private Type m_type;
 
 		static Wall()
 		{
-			WALLTYPE_COUNTS = new Dictionary<WallType, int>()
+			WALLTYPE_COUNTS = new Dictionary<Type, int>()
 			{
-				{WallType.OPEN, 14},
-				{WallType.RABBIT_HOLE, 4},
-				{WallType.MOUSE_HOLE, 4},
-				{WallType.MAGIC_DOOR, 3},
-				{WallType.CLOSED, 2}
+				{ Type.OPEN, 14 },
+				{ Type.RABBIT_HOLE, 4 },
+				{ Type.MOUSE_HOLE, 4 },
+				{ Type.MAGIC_DOOR, 3 },
+				{ Type.CLOSED, 2 }
 			};
 		}
 
-		// Generate a random game board of 4 by 4 with the given number of magic doors
-		static void GenerateWalls(int magicDoors)
+        public Wall(Type type)
+        {
+            m_type = type;
+        }
+
+		// Generate random walls in the given game board with the given number of magic doors
+		static void GenerateWalls(Board board, int magicDoors = 1)
 		{
 
-		}
-
-		// Use this for initialization
-		void Start ()
-		{
-
-		}
-		
-		// Update is called once per frame
-		void Update ()
-		{
-			
 		}
 	}
 }
