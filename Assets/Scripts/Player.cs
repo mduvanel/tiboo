@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 namespace Tiboo
 {
     public class Player
@@ -20,13 +17,13 @@ namespace Tiboo
             RABBIT
         }
 
-        private Animal m_animal;
-        private Color m_color;
+        public Animal AnimalType { get; set; }
+        public Color ColorType { get; set; }
 
         public Player(Animal animal, Color color)
         {
-            m_color = color;
-            m_animal = animal;
+            ColorType = color;
+            AnimalType = animal;
         }
     }
 }
