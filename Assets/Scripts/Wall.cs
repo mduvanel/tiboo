@@ -15,7 +15,7 @@ namespace Tiboo
 
 		private static readonly Dictionary<Type, int> WALLTYPE_COUNTS;
 
-        private Type m_type;
+        public Type WallType { get; set; }
 
 		static Wall()
 		{
@@ -31,7 +31,7 @@ namespace Tiboo
 
         public Wall(Type type)
         {
-            m_type = type;
+            WallType = type;
         }
 
 		// Generate random walls in the given game board with the given number of magic doors

@@ -8,13 +8,22 @@ namespace Tiboo
         private List<Player> m_players;
         private Board m_board;
 
-        public Game(List<Player> players)
+        private int m_currentPlayerIndex;
+        private int m_currentTurn;
+        private int m_maxTurns;
+
+        public Game(List<Player> players, Board board, int maxTurns = -1)
         {
+            m_currentPlayerIndex = 0;
+            m_currentTurn = 0;
+            m_maxTurns = maxTurns;
             m_players = players;
+            m_board = board;
+            
             ValidatePlayers();
         }
 
-        void ValidatePlayers()
+        private void ValidatePlayers()
         {
             if ((m_players.Find(x => x.AnimalType == Player.Animal.MOUSE) == null) ||
                 (m_players.Find(x => x.AnimalType == Player.Animal.RABBIT) == null))
@@ -23,5 +32,20 @@ namespace Tiboo
             }
         }
 
+        private bool CheckMoveIsPossible(Tile.Direction direction)
+        {
+            Player currentPlayer = m_players[m_currentPlayerIndex];
+            Tile currentTile = m_board.GetTile(currentPlayer);
+            bool otherPlayerOnDestination = (m_players.Find(x => x.Pos == currentPlayer.Pos.OffsetPosition(direction)) != null);
+            return currentPlayer.CanMoveTo(currentTile, otherPlayerOnDestination, currentTile.GetWall(direction).WallType);
+        }
+
+        public void Move(Tile.Direction direction)
+        {
+            if (CheckMoveIsPossible(direction))
+            {
+                m_players[m_currentPlayerIndex].Pos.Move(direction);
+            }
+        }
     }
 }

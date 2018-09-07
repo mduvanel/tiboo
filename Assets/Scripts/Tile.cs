@@ -3,17 +3,34 @@ using System;
 
 namespace Tiboo
 {
-	public class Tile
-	{
-		public enum Direction
-		{
-			NORTH,
-			EAST,
-			SOUTH,
-			WEST
-		}
+    static class DirectionExtensions
+    {
+        private static Dictionary<Tile.Direction, Tile.Direction> OPPOSITES =
+            new Dictionary<Tile.Direction, Tile.Direction>
+            {
+                { Tile.Direction.EAST, Tile.Direction.WEST },
+                { Tile.Direction.WEST, Tile.Direction.EAST },
+                { Tile.Direction.NORTH, Tile.Direction.SOUTH },
+                { Tile.Direction.SOUTH, Tile.Direction.NORTH }
+            };
 
-		public enum Animal
+        public static Tile.Direction Opposite(this Tile.Direction direction)
+        {
+            return OPPOSITES[direction];
+        }
+    }
+
+    public class Tile
+    {
+        public enum Direction
+        {
+            NORTH,
+            EAST,
+            SOUTH,
+            WEST
+        }
+
+        public enum Animal
 		{
 			OWL,
 			FROG,

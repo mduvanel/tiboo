@@ -27,26 +27,33 @@ namespace Tiboo
         public void SetWall(Wall wall, int x, int y, Tile.Direction direction)
         {
             m_tiles[x, y].SetWall(direction, wall);
-            switch(direction)
-            {
-                case Tile.Direction.EAST:
-                    m_tiles[x + 1, y].SetWall(Tile.Direction.WEST, wall);
-                    break;
-                case Tile.Direction.WEST:
-                    m_tiles[x - 1, y].SetWall(Tile.Direction.EAST, wall);
-                    break;
-                case Tile.Direction.SOUTH:
-                    m_tiles[x, y + 1].SetWall(Tile.Direction.NORTH, wall);
-                    break;
-                case Tile.Direction.NORTH:
-                    m_tiles[x, y - 1].SetWall(Tile.Direction.SOUTH, wall);
-                    break;
-            }
+            GetTile(x, y, direction).SetWall(direction.Opposite(), wall);
+        }
+
+        public Tile GetTile(Player player)
+        {
+            return m_tiles[player.Pos.x, player.Pos.y];
         }
 
         public Tile GetTile(int x, int y)
         {
             return m_tiles[x, y];
+        }
+
+        public Tile GetTile(int x, int y, Tile.Direction direction)
+        {
+            switch (direction)
+            {
+                case Tile.Direction.EAST:
+                    return m_tiles[x + 1, y];
+                case Tile.Direction.WEST:
+                    return m_tiles[x - 1, y];
+                case Tile.Direction.SOUTH:
+                    return m_tiles[x, y + 1];
+                case Tile.Direction.NORTH:
+                    return m_tiles[x, y - 1];
+            }
+            return null;
         }
     }
 }
