@@ -55,5 +55,16 @@ namespace Tiboo
             }
             return null;
         }
+
+        public bool Move(Tile.Direction direction, Player movingPlayer, Player destinationTilePlayer)
+        {
+            Tile currentTile = GetTile(movingPlayer);
+            if (currentTile.GetWall(direction).GoThrough(movingPlayer, destinationTilePlayer))
+            {
+                movingPlayer.Pos.Move(direction);
+                return true;
+            }
+            return false;
+        }
     }
 }

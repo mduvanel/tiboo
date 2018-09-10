@@ -17,7 +17,7 @@ namespace Tiboo
             RABBIT
         }
 
-        public struct Position
+        public class Position
         {
             public int x;
             public int y;
@@ -36,6 +36,23 @@ namespace Tiboo
             public static bool operator !=(Position a, Position b)
             {
                 return !(a == b);
+            }
+
+            public override bool Equals(object obj)
+            {
+                var pos = obj as Position;
+
+                if (obj == null)
+                {
+                    return false;
+                }
+
+                return pos == this;
+            }
+
+            public override int GetHashCode()
+            {
+                return x ^ y;
             }
 
             public void Move(Tile.Direction direction)
@@ -74,24 +91,6 @@ namespace Tiboo
             ColorType = color;
             AnimalType = animal;
             Pos = position;
-        }
-
-        public bool CanMoveTo(Tile tile, bool destinationOccupied, Wall.Type wallType)
-        {
-            switch(wallType)
-            {
-                case Wall.Type.OPEN:
-                    return true;
-                case Wall.Type.CLOSED:
-                    return false;
-                case Wall.Type.MOUSE_HOLE:
-                    return AnimalType == Animal.MOUSE;
-                case Wall.Type.RABBIT_HOLE:
-                    return AnimalType == Animal.RABBIT;
-                case Wall.Type.MAGIC_DOOR:
-                    return destinationOccupied;
-            }
-            throw new System.Exception("Unknown Wall Type " + wallType);
         }
     }
 }

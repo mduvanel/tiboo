@@ -32,19 +32,23 @@ namespace Tiboo
             }
         }
 
-        private bool CheckMoveIsPossible(Tile.Direction direction)
+        public bool Move(Tile.Direction direction)
         {
             Player currentPlayer = m_players[m_currentPlayerIndex];
-            Tile currentTile = m_board.GetTile(currentPlayer);
-            bool otherPlayerOnDestination = (m_players.Find(x => x.Pos == currentPlayer.Pos.OffsetPosition(direction)) != null);
-            return currentPlayer.CanMoveTo(currentTile, otherPlayerOnDestination, currentTile.GetWall(direction).WallType);
+            return m_board.Move(
+                direction,
+                m_players[m_currentPlayerIndex],
+                m_players.Find(x => x.Pos == currentPlayer.Pos.OffsetPosition(direction))
+            );
         }
 
-        public void Move(Tile.Direction direction)
+        public void NextPlayer()
         {
-            if (CheckMoveIsPossible(direction))
+            ++m_currentPlayerIndex;
+            if (m_currentPlayerIndex == m_players.Count)
             {
-                m_players[m_currentPlayerIndex].Pos.Move(direction);
+                ++m_currentTurn;
+                m_currentPlayerIndex = 0;
             }
         }
     }
