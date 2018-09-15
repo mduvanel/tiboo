@@ -1,4 +1,4 @@
-﻿
+
 namespace Tiboo
 {
     public class Board
