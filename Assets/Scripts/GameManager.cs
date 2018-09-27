@@ -10,6 +10,10 @@ namespace Tiboo
         public GameObject m_blueRabbit;
         public GameObject m_redMouse;
         public GameObject m_yellowMouse;
+        public GameObject m_board;
+
+        // The grid used to draw players
+        public Grid m_grid;
 
         // The actual game object
         private Game m_game;

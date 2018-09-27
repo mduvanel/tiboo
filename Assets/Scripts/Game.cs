@@ -10,12 +10,14 @@ namespace Tiboo
 
         private int m_currentPlayerIndex;
         private int m_currentTurn;
-        private int m_maxTurns;
+        private bool m_currentPlayerAlreadyMoved;
+        private readonly int m_maxTurns;
 
         public Game(List<Player> players, Board board, int maxTurns = -1)
         {
             m_currentPlayerIndex = 0;
             m_currentTurn = 0;
+            m_currentPlayerAlreadyMoved = false;
             m_maxTurns = maxTurns;
             m_players = players;
             m_board = board;
@@ -35,15 +37,23 @@ namespace Tiboo
         public bool Move(Tile.Direction direction)
         {
             Player currentPlayer = m_players[m_currentPlayerIndex];
-            return m_board.Move(
+            Wall.MoveStatus moveStatus = m_board.Move(
                 direction,
                 m_players[m_currentPlayerIndex],
                 m_players.Find(x => x.Pos == currentPlayer.Pos.OffsetPosition(direction))
             );
+
+            if (moveStatus == Wall.MoveStatus.SUCCESS_KNOWN && !m_currentPlayerAlreadyMoved)
+            {
+                // let the same player play again
+                m_currentPlayerAlreadyMoved = true;
+            }
+            return moveStatus != Wall.MoveStatus.FAILURE;
         }
 
         public void NextPlayer()
         {
+            m_currentPlayerAlreadyMoved = false;
             ++m_currentPlayerIndex;
             if (m_currentPlayerIndex == m_players.Count)
             {

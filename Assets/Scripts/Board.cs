@@ -56,15 +56,20 @@ namespace Tiboo
             return null;
         }
 
-        public bool Move(Tile.Direction direction, Player movingPlayer, Player destinationTilePlayer)
-        {
+        public Wall.MoveStatus Move(
+            Tile.Direction direction,
+            Player movingPlayer,
+            Player destinationTilePlayer
+        ) {
             Tile currentTile = GetTile(movingPlayer);
-            if (currentTile.GetWall(direction).GoThrough(movingPlayer, destinationTilePlayer))
+            Wall.MoveStatus moveStatus = currentTile.GetWall(direction).GoThrough(
+                movingPlayer, destinationTilePlayer
+            );
+            if (moveStatus != Wall.MoveStatus.FAILURE)
             {
                 movingPlayer.Pos.Move(direction);
-                return true;
             }
-            return false;
+            return moveStatus;
         }
     }
 }

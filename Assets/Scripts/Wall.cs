@@ -13,9 +13,17 @@ namespace Tiboo
 			CLOSED
 		}
 
-		private static readonly Dictionary<Type, int> WALLTYPE_COUNTS;
+        public enum MoveStatus
+        {
+            SUCCESS_KNOWN,
+            SUCCESS_NEW,
+            FAILURE
+        }
+
+		static readonly Dictionary<Type, int> WALLTYPE_COUNTS;
 
         public Type WallType { get; set; }
+        private bool m_discovered;
 
 		static Wall()
 		{
@@ -32,22 +40,26 @@ namespace Tiboo
         public Wall(Type type)
         {
             WallType = type;
+            m_discovered = false;
         }
 
-        public virtual bool GoThrough(Player player, Player destinationTilePlayer)
+        public virtual MoveStatus GoThrough(Player player, Player destinationTilePlayer)
         {
+            MoveStatus successStatus = m_discovered ? MoveStatus.SUCCESS_KNOWN : MoveStatus.SUCCESS_NEW;
+            m_discovered = true;
+
             switch (WallType)
             {
                 case Wall.Type.OPEN:
-                    return true;
+                    return successStatus;
                 case Wall.Type.CLOSED:
-                    return false;
+                    return MoveStatus.FAILURE;
                 case Wall.Type.MOUSE_HOLE:
-                    return player.AnimalType == Player.Animal.MOUSE;
+                    return ( player.AnimalType == Player.Animal.MOUSE ) ? successStatus : MoveStatus.FAILURE;
                 case Wall.Type.RABBIT_HOLE:
-                    return player.AnimalType == Player.Animal.RABBIT;
+                    return ( player.AnimalType == Player.Animal.RABBIT ) ? successStatus : MoveStatus.FAILURE;
                 case Wall.Type.MAGIC_DOOR:
-                    return destinationTilePlayer != null;
+                    return ( destinationTilePlayer != null ) ? successStatus: MoveStatus.FAILURE;
             }
 
             throw new System.Exception("Unknown Wall Type " + WallType);
@@ -69,20 +81,20 @@ namespace Tiboo
             Opened = false;
         }
 
-        public override bool GoThrough(Player player, Player destinationTilePlayer)
+        public override MoveStatus GoThrough(Player player, Player destinationTilePlayer)
         {
             if (Opened)
             {
-                return true;
+                return MoveStatus.SUCCESS_KNOWN;
             }
 
-            if (base.GoThrough(player, destinationTilePlayer))
+            MoveStatus status = base.GoThrough(player, destinationTilePlayer);
+            if (status != MoveStatus.FAILURE)
             {
                 Opened = true;
-                return true;
             }
 
-            return false;
+            return status;
         }
     }
 }
