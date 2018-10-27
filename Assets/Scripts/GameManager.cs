@@ -18,6 +18,9 @@ namespace Tiboo
         // The actual game object
         private Game m_game;
 
+        // Control when user input is taken into account
+        private bool m_readyToMove;
+
         // Use this for initialization
         void Start()
         {
@@ -40,12 +43,43 @@ namespace Tiboo
             }
 
             m_game = new Game(players, BoardGenerator.GenerateBoard());
+            m_readyToMove = true;
         }
 
         // Update is called once per frame
         void Update()
         {
+            if (!m_readyToMove)
+            {
+                return;
+            }
 
+            int horizontal = (int) Input.GetAxisRaw("Horizontal");
+            int vertical = (int)Input.GetAxisRaw("Vertical");
+
+            if (horizontal != 0 || vertical != 0)
+            {
+                m_readyToMove = false;
+                MoveDetails moveDetails;
+                if (horizontal > 0)
+                {
+                    moveDetails = m_game.Move(Tile.Direction.EAST);
+                }
+                else if (horizontal < 0)
+                {
+                    moveDetails = m_game.Move(Tile.Direction.WEST);
+                }
+                else if (vertical < 0)
+                {
+                    moveDetails = m_game.Move(Tile.Direction.SOUTH);
+                }
+                else
+                {
+                    moveDetails = m_game.Move(Tile.Direction.NORTH);
+                }
+
+                //m_soundPlayer.PlayMove(moveDetails);
+            }
         }
     }
 }

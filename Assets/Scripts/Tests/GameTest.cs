@@ -1,4 +1,3 @@
-using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections.Generic;
 using Tiboo;
@@ -58,19 +57,19 @@ public class GameTest
         Assert.AreEqual(rabbit.Pos, new Player.Position(0, 0));
 
         // Rabbit cannot move through CLOSED wall
-        Assert.IsFalse(game.Move(Tile.Direction.SOUTH));
+        Assert.AreEqual(game.Move(Tile.Direction.SOUTH).Status, MoveDetails.MoveStatus.FAILURE);
         Assert.AreEqual(rabbit.Pos, new Player.Position(0, 0));
 
         // Rabbit can move through OPEN wall
-        Assert.IsTrue(game.Move(Tile.Direction.EAST));
+        Assert.AreEqual(game.Move(Tile.Direction.EAST).Status, MoveDetails.MoveStatus.SUCCESS_NEW);
         Assert.AreEqual(rabbit.Pos, new Player.Position(1, 0));
 
         // Rabbit cannot move through MOUSE_HOLE wall
-        Assert.IsFalse(game.Move(Tile.Direction.SOUTH));
+        Assert.AreEqual(game.Move(Tile.Direction.SOUTH).Status, MoveDetails.MoveStatus.FAILURE);
         Assert.AreEqual(rabbit.Pos, new Player.Position(1, 0));
 
         // Rabbit can move through RABBIT_HOLE wall
-        Assert.IsTrue(game.Move(Tile.Direction.EAST));
+        Assert.AreEqual(game.Move(Tile.Direction.EAST).Status, MoveDetails.MoveStatus.SUCCESS_NEW);
         Assert.AreEqual(rabbit.Pos, new Player.Position(2, 0));
     }
 
@@ -96,19 +95,19 @@ public class GameTest
         Assert.AreEqual(mouse.Pos, new Player.Position(0, 0));
 
         // Mouse cannot move through CLOSED wall
-        Assert.IsFalse(game.Move(Tile.Direction.SOUTH));
+        Assert.AreEqual(game.Move(Tile.Direction.SOUTH).Status, MoveDetails.MoveStatus.FAILURE);
         Assert.AreEqual(mouse.Pos, new Player.Position(0, 0));
 
         // Mouse can move through OPEN wall
-        Assert.IsTrue(game.Move(Tile.Direction.EAST));
+        Assert.AreEqual(game.Move(Tile.Direction.EAST).Status, MoveDetails.MoveStatus.SUCCESS_NEW);
         Assert.AreEqual(mouse.Pos, new Player.Position(1, 0));
 
         // Mouse cannot move through RABBIT_HOLE wall
-        Assert.IsFalse(game.Move(Tile.Direction.SOUTH));
+        Assert.AreEqual(game.Move(Tile.Direction.SOUTH).Status, MoveDetails.MoveStatus.FAILURE);
         Assert.AreEqual(mouse.Pos, new Player.Position(1, 0));
 
         // Mouse can move through MOUSE_HOLE wall
-        Assert.IsTrue(game.Move(Tile.Direction.EAST));
+        Assert.AreEqual(game.Move(Tile.Direction.EAST).Status, MoveDetails.MoveStatus.SUCCESS_NEW);
         Assert.AreEqual(mouse.Pos, new Player.Position(2, 0));
 
     }
@@ -126,33 +125,33 @@ public class GameTest
         Player mouse = new Player(Player.Animal.MOUSE, Player.Color.GREEN, new Player.Position(2, 0));
 
         // Set Magic door next to the rabbit, and an OPEN wall to move the mouse
-        board.SetWall(new MagicDoor(), 0, 0, Tile.Direction.EAST);
+        board.SetWall(new Wall(Wall.Type.MAGIC_DOOR), 0, 0, Tile.Direction.EAST);
         board.SetWall(new Wall(Wall.Type.OPEN), 1, 0, Tile.Direction.EAST);
 
         List<Player> players = new List<Player> { rabbit, mouse };
         Game game = new Game(players, board);
 
         // Verify starting positions
-        Assert.AreEqual(rabbit.Pos, new Player.Position(0, 0));
-        Assert.AreEqual(mouse.Pos, new Player.Position(2, 0));
+        Assert.AreEqual(new Player.Position(0, 0), rabbit.Pos);
+        Assert.AreEqual(new Player.Position(2, 0), mouse.Pos);
 
         // Rabbit cannot move through closed MagicDoor
-        Assert.IsFalse(game.Move(Tile.Direction.EAST));
-        Assert.AreEqual(rabbit.Pos, new Player.Position(0, 0));
+        Assert.AreEqual(MoveDetails.MoveStatus.FAILURE, game.Move(Tile.Direction.EAST).Status);
+        Assert.AreEqual(new Player.Position(0, 0), rabbit.Pos);
 
         // Mouse moves to (1, 0) through OPEN wall
         game.NextPlayer();
-        Assert.IsTrue(game.Move(Tile.Direction.WEST));
-        Assert.AreEqual(mouse.Pos, new Player.Position(1, 0));
+        Assert.AreEqual(MoveDetails.MoveStatus.SUCCESS_NEW, game.Move(Tile.Direction.WEST).Status);
+        Assert.AreEqual(new Player.Position(1, 0), mouse.Pos);
 
         // Rabbit can move through MagicDoor
         game.NextPlayer();
-        Assert.IsTrue(game.Move(Tile.Direction.EAST));
-        Assert.AreEqual(rabbit.Pos, new Player.Position(1, 0));
+        Assert.AreEqual(MoveDetails.MoveStatus.SUCCESS_NEW, game.Move(Tile.Direction.EAST).Status);
+        Assert.AreEqual(new Player.Position(1, 0), rabbit.Pos);
 
         // Mouse can also move through MagicDoor now that it is opened
         game.NextPlayer();
-        Assert.IsTrue(game.Move(Tile.Direction.WEST));
-        Assert.AreEqual(mouse.Pos, new Player.Position(0, 0));
+        Assert.AreEqual(MoveDetails.MoveStatus.SUCCESS_KNOWN, game.Move(Tile.Direction.WEST).Status);
+        Assert.AreEqual(new Player.Position(0, 0), mouse.Pos);
     }
 }

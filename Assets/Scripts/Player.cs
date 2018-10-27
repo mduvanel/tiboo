@@ -1,4 +1,3 @@
-
 namespace Tiboo
 {
     public class Player

@@ -13,17 +13,10 @@ namespace Tiboo
 			CLOSED
 		}
 
-        public enum MoveStatus
-        {
-            SUCCESS_KNOWN,
-            SUCCESS_NEW,
-            FAILURE
-        }
-
 		static readonly Dictionary<Type, int> WALLTYPE_COUNTS;
 
         public Type WallType { get; set; }
-        private bool m_discovered;
+        private bool m_traversed;
 
 		static Wall()
 		{
@@ -40,29 +33,42 @@ namespace Tiboo
         public Wall(Type type)
         {
             WallType = type;
-            m_discovered = false;
+            m_traversed = false;
         }
 
-        public virtual MoveStatus GoThrough(Player player, Player destinationTilePlayer)
+        public virtual void GoThrough(Player player, Player destinationTilePlayer, MoveDetails moveDetails)
         {
-            MoveStatus successStatus = m_discovered ? MoveStatus.SUCCESS_KNOWN : MoveStatus.SUCCESS_NEW;
-            m_discovered = true;
+            MoveDetails.MoveStatus successStatus = m_traversed ?
+                MoveDetails.MoveStatus.SUCCESS_KNOWN :
+                MoveDetails.MoveStatus.SUCCESS_NEW;
 
+            moveDetails.WallType = WallType;
             switch (WallType)
             {
                 case Wall.Type.OPEN:
-                    return successStatus;
+                    moveDetails.Status = successStatus;
+                    break;
                 case Wall.Type.CLOSED:
-                    return MoveStatus.FAILURE;
+                    moveDetails.Status = MoveDetails.MoveStatus.FAILURE;
+                    break;
                 case Wall.Type.MOUSE_HOLE:
-                    return ( player.AnimalType == Player.Animal.MOUSE ) ? successStatus : MoveStatus.FAILURE;
+                    moveDetails.Status = ( player.AnimalType == Player.Animal.MOUSE ) ?
+                        successStatus :
+                        MoveDetails.MoveStatus.FAILURE;
+                    break;
                 case Wall.Type.RABBIT_HOLE:
-                    return ( player.AnimalType == Player.Animal.RABBIT ) ? successStatus : MoveStatus.FAILURE;
+                    moveDetails.Status = ( player.AnimalType == Player.Animal.RABBIT ) ?
+                        successStatus :
+                        MoveDetails.MoveStatus.FAILURE;
+                    break;
                 case Wall.Type.MAGIC_DOOR:
-                    return ( destinationTilePlayer != null ) ? successStatus: MoveStatus.FAILURE;
+                    moveDetails.Status = m_traversed || ( destinationTilePlayer != null ) ?
+                        successStatus :
+                        MoveDetails.MoveStatus.FAILURE;
+                    break;
             }
 
-            throw new System.Exception("Unknown Wall Type " + WallType);
+            m_traversed = moveDetails.Status != MoveDetails.MoveStatus.FAILURE;
         }
 
 		// Generate random walls in the given game board with the given number of magic doors
@@ -71,30 +77,4 @@ namespace Tiboo
 
 		}
 	}
-
-    public class MagicDoor : Wall
-    {
-        private bool Opened { get; set; }
-
-        public MagicDoor() : base(Type.MAGIC_DOOR)
-        {
-            Opened = false;
-        }
-
-        public override MoveStatus GoThrough(Player player, Player destinationTilePlayer)
-        {
-            if (Opened)
-            {
-                return MoveStatus.SUCCESS_KNOWN;
-            }
-
-            MoveStatus status = base.GoThrough(player, destinationTilePlayer);
-            if (status != MoveStatus.FAILURE)
-            {
-                Opened = true;
-            }
-
-            return status;
-        }
-    }
 }

@@ -1,4 +1,3 @@
-
 namespace Tiboo
 {
     public class Board
@@ -56,20 +55,20 @@ namespace Tiboo
             return null;
         }
 
-        public Wall.MoveStatus Move(
+        public void Move(
             Tile.Direction direction,
             Player movingPlayer,
-            Player destinationTilePlayer
+            Player destinationTilePlayer,
+            MoveDetails moveDetails
         ) {
             Tile currentTile = GetTile(movingPlayer);
-            Wall.MoveStatus moveStatus = currentTile.GetWall(direction).GoThrough(
-                movingPlayer, destinationTilePlayer
+            currentTile.GetWall(direction).GoThrough(
+                movingPlayer, destinationTilePlayer, moveDetails
             );
-            if (moveStatus != Wall.MoveStatus.FAILURE)
+            if (moveDetails.Status != MoveDetails.MoveStatus.FAILURE)
             {
                 movingPlayer.Pos.Move(direction);
             }
-            return moveStatus;
         }
     }
 }
