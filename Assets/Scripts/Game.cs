@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Tiboo
 {
     public class Game
     {
-        private List<Player> m_players;
+        private readonly List<Player> m_players;
         private Board m_board;
 
         private int m_currentPlayerIndex;
@@ -21,7 +21,7 @@ namespace Tiboo
             m_maxTurns = maxTurns;
             m_players = players;
             m_board = board;
-            
+
             ValidatePlayers();
         }
 
