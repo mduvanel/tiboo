@@ -1,4 +1,4 @@
-﻿namespace Tiboo
+namespace Tiboo
 {
     public class MoveDetails
     {
