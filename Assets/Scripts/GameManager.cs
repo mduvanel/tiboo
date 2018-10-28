@@ -1,16 +1,21 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tiboo
 {
     public class GameManager : MonoBehaviour
     {
-        // GameObjects 
+        // GameObjects
         public GameObject m_greenRabbit;
         public GameObject m_blueRabbit;
         public GameObject m_redMouse;
         public GameObject m_yellowMouse;
         public GameObject m_board;
+
+        public AudioSource m_audioSource;
+
+        // The AudioClips for each sound
+        public Dictionary<SoundMixer.SoundFX, AudioClip> m_clips;
 
         // The grid used to draw players
         public Grid m_grid;
@@ -46,6 +51,15 @@ namespace Tiboo
             m_readyToMove = true;
         }
 
+        private void PlaySounds(List<SoundMixer.SoundFX> sounds)
+        {
+            foreach (SoundMixer.SoundFX soundFX in sounds)
+            {
+                m_audioSource.clip = m_clips[soundFX];
+                m_audioSource.Play();
+            }
+        }
+
         // Update is called once per frame
         void Update()
         {
@@ -78,7 +92,7 @@ namespace Tiboo
                     moveDetails = m_game.Move(Tile.Direction.NORTH);
                 }
 
-                //m_soundPlayer.PlayMove(moveDetails);
+                PlaySounds(SoundMixer.GetMoveSounds(moveDetails));
             }
         }
     }

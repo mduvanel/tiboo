@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System;
 
 namespace Tiboo
 {
-    public class SoundMixer
+    public static class SoundMixer
     {
         // Enum covering all possible sound FX
         public enum SoundFX
@@ -68,7 +68,16 @@ namespace Tiboo
             return WALL_SOUNDS[wallType];
         }
 
-        public static List<SoundFX> GetMoveSoundFX(MoveDetails moveDetails)
+        public static List<SoundFX> GetWelcomeSounds(Player player)
+        {
+            return new List<SoundFX> {
+                SoundFX.HELLO,
+                GetPlayerSound(player),
+                SoundFX.WHERE_TO_GO
+            };
+        }
+
+        public static List<SoundFX> GetMoveSounds(MoveDetails moveDetails)
         {
             if (moveDetails.Status == MoveDetails.MoveStatus.BORDER)
             {
