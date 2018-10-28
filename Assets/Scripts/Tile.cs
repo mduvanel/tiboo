@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System;
 
 namespace Tiboo
 {
     static class DirectionExtensions
     {
-        private static Dictionary<Tile.Direction, Tile.Direction> OPPOSITES =
+        private static readonly Dictionary<Tile.Direction, Tile.Direction> OPPOSITES =
             new Dictionary<Tile.Direction, Tile.Direction>
             {
                 { Tile.Direction.EAST, Tile.Direction.WEST },
@@ -45,12 +45,12 @@ namespace Tiboo
 		}
 
 		// The Walls surrounding this Tile, a null value means a border Tile
-		private Dictionary<Direction, Wall> m_walls;
+		private readonly Dictionary<Direction, Wall> m_walls;
 
-		private Animal m_animal;
+		private readonly Animal m_animal;
 
-		private Color m_color;
-		
+		private readonly Color m_color;
+
 		public Tile(Animal animal, Color color)
 		{
             m_walls = new Dictionary<Direction, Wall>()
