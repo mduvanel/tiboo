@@ -33,6 +33,7 @@ public class GameTest
             new Player(Player.Animal.MOUSE, Player.Color.RED, new Player.Position(0, 0))
         };
         Game game = new Game(players, new Board());
+        Assert.NotNull(game);
     }
 
     [Test]

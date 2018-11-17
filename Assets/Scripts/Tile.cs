@@ -24,6 +24,7 @@ namespace Tiboo
     {
         public enum Direction
         {
+            NONE,
             NORTH,
             EAST,
             SOUTH,

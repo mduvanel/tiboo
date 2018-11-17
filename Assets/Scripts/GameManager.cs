@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,22 +13,18 @@ namespace Tiboo
         public GameObject m_yellowMouse;
         public GameObject m_board;
 
-        public AudioSource m_audioSource;
+        public GameObject m_soundManagerObject;
+        public GameObject m_gameInputObject;
 
-        // The AudioClips for each sound
-        public Dictionary<SoundMixer.SoundFX, AudioClip> m_clips;
-
-        // The grid used to draw players
-        public Grid m_grid;
+        // Actual scrip instances
+        SoundManager m_soundManager;
+        GameInput m_gameInput;
 
         // The actual game object
-        private Game m_game;
-
-        // Control when user input is taken into account
-        private bool m_readyToMove;
+        Game m_game;
 
         // Use this for initialization
-        void Start()
+        public void Start()
         {
             List<Player> players = new List<Player>();
             if (m_greenRabbit != null)
@@ -48,51 +45,27 @@ namespace Tiboo
             }
 
             m_game = new Game(players, BoardGenerator.GenerateBoard());
-            m_readyToMove = true;
+            m_soundManagerObject.SetActive(true);
+            m_gameInputObject.SetActive(true);
+            m_soundManager = m_soundManagerObject.GetComponent<SoundManager>();
+            m_gameInput = m_gameInputObject.GetComponent<GameInput>();
         }
 
-        private void PlaySounds(List<SoundMixer.SoundFX> sounds)
+        public void Update()
         {
-            foreach (SoundMixer.SoundFX soundFX in sounds)
+            if (!m_soundManager.Done())
             {
-                m_audioSource.clip = m_clips[soundFX];
-                m_audioSource.Play();
-            }
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            if (!m_readyToMove)
-            {
+                Debug.Log("Waiting for sound to finish playing...");
                 return;
             }
 
-            int horizontal = (int) Input.GetAxisRaw("Horizontal");
-            int vertical = (int)Input.GetAxisRaw("Vertical");
-
-            if (horizontal != 0 || vertical != 0)
+            Tile.Direction input = m_gameInput.GetNewInput();
+            if (input != Tile.Direction.NONE)
             {
-                m_readyToMove = false;
-                MoveDetails moveDetails;
-                if (horizontal > 0)
-                {
-                    moveDetails = m_game.Move(Tile.Direction.EAST);
-                }
-                else if (horizontal < 0)
-                {
-                    moveDetails = m_game.Move(Tile.Direction.WEST);
-                }
-                else if (vertical < 0)
-                {
-                    moveDetails = m_game.Move(Tile.Direction.SOUTH);
-                }
-                else
-                {
-                    moveDetails = m_game.Move(Tile.Direction.NORTH);
-                }
-
-                PlaySounds(SoundMixer.GetMoveSounds(moveDetails));
+                Debug.Log("Input detected : " + input);
+                m_soundManager.PlayAllSounds(SoundMixer.GetMoveSounds(
+                    m_game.Move(input)
+                ));
             }
         }
     }

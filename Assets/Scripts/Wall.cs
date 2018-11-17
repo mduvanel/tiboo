@@ -13,22 +13,8 @@ namespace Tiboo
 			CLOSED
 		}
 
-		static readonly Dictionary<Type, int> WALLTYPE_COUNTS;
-
         public Type WallType { get; set; }
         private bool m_traversed;
-
-		static Wall()
-		{
-			WALLTYPE_COUNTS = new Dictionary<Type, int>()
-			{
-				{ Type.OPEN, 14 },
-				{ Type.RABBIT_HOLE, 4 },
-				{ Type.MOUSE_HOLE, 4 },
-				{ Type.MAGIC_DOOR, 3 },
-				{ Type.CLOSED, 2 }
-			};
-		}
 
         public Wall(Type type)
         {
