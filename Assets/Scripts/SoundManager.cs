@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -69,11 +69,19 @@ namespace Tiboo
             }
             if (m_soundsToPlay.Count > 0)
             {
-                Debug.Log("Next sound to play : " + m_soundsToPlay[0]);
-                m_audioSource.clip = m_clips[m_soundsToPlay[0]];
-                Debug.Log("Starting clip " + m_audioSource.clip.name);
-                m_audioSource.Play();
-                m_soundsToPlay.RemoveAt(0);
+                try
+                {
+                    Debug.Log("Next sound to play : " + m_soundsToPlay[0]);
+                    m_audioSource.clip = m_clips[m_soundsToPlay[0]];
+                    Debug.Log("Starting clip " + m_audioSource.clip.name);
+                    m_audioSource.Play();
+                    m_soundsToPlay.RemoveAt(0);
+                }
+                catch (NullReferenceException)
+                {
+                    Debug.LogError("Unable to find sound for key " + m_soundsToPlay[0]);
+                    m_soundsToPlay.RemoveAt(0);
+                }
             }
         }
     }
