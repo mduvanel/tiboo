@@ -16,16 +16,20 @@ namespace Tiboo
         public GameObject m_soundManagerObject;
         public GameObject m_gameInputObject;
 
-        // Actual scrip instances
+        // Actual script instances
         SoundManager m_soundManager;
         GameInput m_gameInput;
 
         // The actual game object
         Game m_game;
 
+        // The state machine for synchronizing inputs and playing sounds
+        GameManagerStateMachine m_stateMachine;
+
         // Use this for initialization
         public void Start()
         {
+            // Create players with respective startup position
             List<Player> players = new List<Player>();
             if (m_greenRabbit != null)
             {
@@ -44,28 +48,43 @@ namespace Tiboo
                 players.Add(new Player(Player.Animal.MOUSE, Player.Color.YELLOW, new Player.Position(3, 3)));
             }
 
+            // Create member objects
             m_game = new Game(players, BoardGenerator.GenerateBoard());
+            m_stateMachine = new GameManagerStateMachine();
             m_soundManagerObject.SetActive(true);
             m_gameInputObject.SetActive(true);
             m_soundManager = m_soundManagerObject.GetComponent<SoundManager>();
             m_gameInput = m_gameInputObject.GetComponent<GameInput>();
+
+            // Initialize sound manager with startup sounds
+            m_soundManager.PlayAllSounds(SoundMixer.GetWelcomeSounds(m_game.CurrentPlayer()));
         }
 
         public void Update()
         {
-            if (!m_soundManager.Done())
+            switch (m_stateMachine.CurrentState)
             {
-                Debug.Log("Waiting for sound to finish playing...");
-                return;
-            }
-
-            Tile.Direction input = m_gameInput.GetNewInput();
-            if (input != Tile.Direction.NONE)
-            {
-                Debug.Log("Input detected : " + input);
-                m_soundManager.PlayAllSounds(SoundMixer.GetMoveSounds(
-                    m_game.Move(input)
-                ));
+                case GameManagerStateMachine.State.WAIT_FOR_INPUT:
+                    Tile.Direction input = m_gameInput.GetNewInput();
+                    if (input != Tile.Direction.NONE)
+                    {
+                        Debug.Log("Input detected : " + input);
+                        m_soundManager.PlayAllSounds(SoundMixer.GetMoveSounds(
+                            m_game.Move(input)
+                        ));
+                        m_stateMachine.MoveNext(GameManagerStateMachine.Event.INPUT_RECEIVED);
+                    }
+                    break;
+                case GameManagerStateMachine.State.PLAYING_SOUNDS:
+                    if (m_soundManager.Done())
+                    {
+                        m_stateMachine.MoveNext(GameManagerStateMachine.Event.SOUND_FINISHED);
+                    }
+                    else
+                    {
+                        Debug.Log("Waiting for sound to finish playing...");
+                    }
+                    break;
             }
         }
     }

@@ -5,13 +5,13 @@ namespace Tiboo
 {
     public class Game
     {
-        private readonly List<Player> m_players;
-        private Board m_board;
+        readonly List<Player> m_players;
+        Board m_board;
 
-        private int m_currentPlayerIndex;
-        private int m_currentTurn;
-        private bool m_currentPlayerAlreadyMoved;
-        private readonly int m_maxTurns;
+        int m_currentPlayerIndex;
+        int m_currentTurn;
+        bool m_currentPlayerAlreadyMoved;
+        readonly int m_maxTurns;
 
         public Game(List<Player> players, Board board, int maxTurns = -1)
         {
@@ -25,7 +25,7 @@ namespace Tiboo
             ValidatePlayers();
         }
 
-        private void ValidatePlayers()
+        void ValidatePlayers()
         {
             if ((m_players.Find(x => x.AnimalType == Player.Animal.MOUSE) == null) ||
                 (m_players.Find(x => x.AnimalType == Player.Animal.RABBIT) == null))
@@ -62,6 +62,11 @@ namespace Tiboo
                 ++m_currentTurn;
                 m_currentPlayerIndex = 0;
             }
+        }
+
+        public Player CurrentPlayer()
+        {
+            return m_players[m_currentPlayerIndex];
         }
     }
 }

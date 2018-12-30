@@ -25,7 +25,7 @@ namespace Tiboo
             PLAY_AGAIN
         }
 
-        private static readonly Dictionary<KeyValuePair<Player.Animal, Player.Color>, SoundFX> PLAYER_SOUNDS =
+        static readonly Dictionary<KeyValuePair<Player.Animal, Player.Color>, SoundFX> PLAYER_SOUNDS =
             new Dictionary<KeyValuePair<Player.Animal, Player.Color>, SoundFX>
             {
                 { new KeyValuePair<Player.Animal, Player.Color>(
@@ -46,14 +46,14 @@ namespace Tiboo
                   ), SoundFX.GREEN_RABBIT }
             };
 
-        private static SoundFX GetPlayerSound(Player player)
+        static SoundFX GetPlayerSound(Player player)
         {
             return PLAYER_SOUNDS[new KeyValuePair<Player.Animal, Player.Color>(
                 player.AnimalType, player.ColorType
             )];
         }
 
-        private static readonly Dictionary<Wall.Type, SoundFX> WALL_SOUNDS =
+        static readonly Dictionary<Wall.Type, SoundFX> WALL_SOUNDS =
             new Dictionary<Wall.Type, SoundFX>
             {
                 { Wall.Type.OPEN, SoundFX.OPEN_WALL },
@@ -63,7 +63,7 @@ namespace Tiboo
                 { Wall.Type.MOUSE_HOLE, SoundFX.MOUSE_HOLE }
             };
 
-        private static SoundFX GetWallSound(Wall.Type wallType)
+        static SoundFX GetWallSound(Wall.Type wallType)
         {
             return WALL_SOUNDS[wallType];
         }
