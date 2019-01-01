@@ -45,7 +45,7 @@ namespace Tiboo
                 { SoundMixer.SoundFX.RABBIT_HOLE, m_rabbitHole },
                 { SoundMixer.SoundFX.MOUSE_HOLE, m_mouseHole },
                 { SoundMixer.SoundFX.MAGIC_DOOR, m_magicDoor },
-                { SoundMixer.SoundFX.BORDER, m_border },
+                { SoundMixer.SoundFX.BORDER, m_border }
             };
             m_soundsToPlay = new List<SoundMixer.SoundFX>();
         }

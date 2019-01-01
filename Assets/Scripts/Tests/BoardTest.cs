@@ -94,4 +94,21 @@ public class BoardTest
         Assert.That(() => board.SetWall(new Wall(Wall.Type.CLOSED), 0, 0, Tile.Direction.NORTH),
                     Throws.Exception.TypeOf<System.IndexOutOfRangeException>());
     }
+
+    [Test]
+    public void MoveThroughBorderDoesNotThrow()
+    {
+        Board board = new Board();
+        Player movingPlayer = new Player(
+            Player.Animal.MOUSE,
+            Player.Color.RED,
+            new Player.Position(0, 0)
+        );
+        MoveDetails moveDetails = new MoveDetails(movingPlayer);
+        board.Move(Tile.Direction.WEST, movingPlayer, null, moveDetails);
+
+        Assert.AreEqual(MoveDetails.MoveStatus.BORDER, moveDetails.Status);
+        Assert.AreEqual(false, moveDetails.PlayAgain);
+        Assert.AreSame(movingPlayer, moveDetails.Player);
+    }
 }

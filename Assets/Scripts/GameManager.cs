@@ -85,6 +85,9 @@ namespace Tiboo
                         Debug.Log("Waiting for sound to finish playing...");
                     }
                     break;
+                default:
+                    Debug.LogError("Unknown state: " + m_stateMachine.CurrentState);
+                    break;
             }
         }
     }

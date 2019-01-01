@@ -62,12 +62,20 @@ namespace Tiboo
             MoveDetails moveDetails
         ) {
             Tile currentTile = GetTile(movingPlayer);
-            currentTile.GetWall(direction).GoThrough(
-                movingPlayer, destinationTilePlayer, moveDetails
-            );
-            if (moveDetails.Status != MoveDetails.MoveStatus.FAILURE)
+            Wall wall = currentTile.GetWall(direction);
+            if (wall == null)
             {
-                movingPlayer.Pos.Move(direction);
+                moveDetails.Status = MoveDetails.MoveStatus.BORDER;
+            }
+            else
+            {
+                wall.GoThrough(
+                    movingPlayer, destinationTilePlayer, moveDetails
+                );
+                if (moveDetails.Status != MoveDetails.MoveStatus.FAILURE)
+                {
+                    movingPlayer.Pos.Move(direction);
+                }
             }
         }
     }
