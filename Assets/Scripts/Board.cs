@@ -65,7 +65,7 @@ namespace Tiboo
             Wall wall = currentTile.GetWall(direction);
             if (wall == null)
             {
-                moveDetails.Status = MoveDetails.MoveStatus.BORDER;
+                moveDetails.Status = MoveDetails.MoveStatus.ABORTED;
             }
             else
             {

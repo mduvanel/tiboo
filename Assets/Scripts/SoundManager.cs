@@ -23,6 +23,8 @@ namespace Tiboo
         public AudioClip m_mouseHole;
         public AudioClip m_magicDoor;
         public AudioClip m_border;
+        public AudioClip m_victory;
+        public AudioClip m_defeat;
 
         public Dictionary<SoundMixer.SoundFX, AudioClip> m_clips;
 
@@ -45,7 +47,9 @@ namespace Tiboo
                 { SoundMixer.SoundFX.RABBIT_HOLE, m_rabbitHole },
                 { SoundMixer.SoundFX.MOUSE_HOLE, m_mouseHole },
                 { SoundMixer.SoundFX.MAGIC_DOOR, m_magicDoor },
-                { SoundMixer.SoundFX.BORDER, m_border }
+                { SoundMixer.SoundFX.BORDER, m_border },
+                { SoundMixer.SoundFX.VICTORY, m_victory },
+                { SoundMixer.SoundFX.DEFEAT, m_defeat }
             };
             m_soundsToPlay = new List<SoundMixer.SoundFX>();
         }

@@ -51,7 +51,7 @@ namespace Tiboo
                 m_currentPlayerAlreadyMoved = true;
                 moveDetails.PlayAgain = true;
             }
-            else if (moveDetails.Status != MoveDetails.MoveStatus.BORDER)
+            else if (moveDetails.Status != MoveDetails.MoveStatus.ABORTED)
             {
                 NextPlayer();
             }
@@ -72,6 +72,11 @@ namespace Tiboo
         public Player CurrentPlayer()
         {
             return m_players[m_currentPlayerIndex];
+        }
+
+        public bool GameOver()
+        {
+            return (m_maxTurns > 0) && (m_currentTurn >= m_maxTurns);
         }
     }
 }

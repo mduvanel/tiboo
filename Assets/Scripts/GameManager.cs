@@ -33,19 +33,35 @@ namespace Tiboo
             List<Player> players = new List<Player>();
             if (m_greenRabbit != null)
             {
-                players.Add(new Player(Player.Animal.RABBIT, Player.Color.GREEN, new Player.Position(0, 0)));
+                players.Add(new Player(
+                    Player.Animal.RABBIT,
+                    Player.Color.GREEN,
+                    new Player.Position(0, 0)
+                ));
             }
             if (m_blueRabbit != null)
             {
-                players.Add(new Player(Player.Animal.RABBIT, Player.Color.BLUE, new Player.Position(0, 3)));
+                players.Add(new Player(
+                    Player.Animal.RABBIT,
+                    Player.Color.BLUE,
+                    new Player.Position(0, 3)
+                ));
             }
             if (m_redMouse != null)
             {
-                players.Add(new Player(Player.Animal.MOUSE, Player.Color.RED, new Player.Position(3, 0)));
+                players.Add(new Player(
+                    Player.Animal.MOUSE,
+                    Player.Color.RED,
+                    new Player.Position(3, 0)
+                ));
             }
             if (m_yellowMouse != null)
             {
-                players.Add(new Player(Player.Animal.MOUSE, Player.Color.YELLOW, new Player.Position(3, 3)));
+                players.Add(new Player(
+                    Player.Animal.MOUSE,
+                    Player.Color.YELLOW,
+                    new Player.Position(3, 3)
+                ));
             }
 
             // Create member objects
@@ -57,7 +73,9 @@ namespace Tiboo
             m_gameInput = m_gameInputObject.GetComponent<GameInput>();
 
             // Initialize sound manager with startup sounds
-            m_soundManager.PlayAllSounds(SoundMixer.GetWelcomeSounds(m_game.CurrentPlayer()));
+            m_soundManager.PlayAllSounds(
+                SoundMixer.GetWelcomeSounds(m_game.CurrentPlayer())
+            );
         }
 
         public void Update()
@@ -69,16 +87,27 @@ namespace Tiboo
                     if (input != Tile.Direction.NONE)
                     {
                         Debug.Log("Input detected : " + input);
-                        m_soundManager.PlayAllSounds(SoundMixer.GetMoveSounds(
-                            m_game.Move(input), m_game.CurrentPlayer()
-                        ));
-                        m_stateMachine.MoveNext(GameManagerStateMachine.Event.INPUT_RECEIVED);
+                        MoveDetails moveDetails = m_game.Move(input);
+                        List<SoundMixer.SoundFX> allSounds =
+                                           SoundMixer.GetMoveSounds(moveDetails);
+                        if (moveDetails.Status != MoveDetails.MoveStatus.ABORTED)
+                        {
+                            allSounds.AddRange(SoundMixer.GetNextPlayerSounds(
+                                moveDetails, m_game
+                            ));
+                        }
+                        m_soundManager.PlayAllSounds(allSounds);
+                        m_stateMachine.MoveNext(
+                            GameManagerStateMachine.Event.INPUT_RECEIVED
+                        );
                     }
                     break;
                 case GameManagerStateMachine.State.PLAYING_SOUNDS:
                     if (m_soundManager.Done())
                     {
-                        m_stateMachine.MoveNext(GameManagerStateMachine.Event.SOUND_FINISHED);
+                        m_stateMachine.MoveNext(
+                            GameManagerStateMachine.Event.SOUND_FINISHED
+                        );
                     }
                     else
                     {

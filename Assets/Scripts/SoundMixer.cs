@@ -22,7 +22,9 @@ namespace Tiboo
             BORDER,
             THOU_SHALT_PASS,
             THOU_SHALT_NOT_PASS,
-            PLAY_AGAIN
+            PLAY_AGAIN,
+            VICTORY,
+            DEFEAT
         }
 
         static readonly Dictionary<KeyValuePair<Player.Animal, Player.Color>, SoundFX> PLAYER_SOUNDS =
@@ -77,9 +79,28 @@ namespace Tiboo
             };
         }
 
-        public static List<SoundFX> GetMoveSounds(MoveDetails moveDetails, Player nextPlayer)
+        public static List<SoundFX> GetNextPlayerSounds(MoveDetails moveDetails, Game game)
         {
-            if (moveDetails.Status == MoveDetails.MoveStatus.BORDER)
+            if (game.GameOver())
+            {
+                return new List<SoundFX> { SoundFX.DEFEAT };
+            }
+            else
+            {
+                if (moveDetails.PlayAgain)
+                {
+                    return new List<SoundFX> { SoundFX.PLAY_AGAIN };
+                }
+                else
+                {
+                    return GetWelcomeSounds(game.CurrentPlayer());
+                }
+            }
+        }
+
+        public static List<SoundFX> GetMoveSounds(MoveDetails moveDetails)
+        {
+            if (moveDetails.Status == MoveDetails.MoveStatus.ABORTED)
             {
                 return new List<SoundFX> {
                     SoundFX.BORDER
@@ -88,24 +109,13 @@ namespace Tiboo
             else
             {
                 // First insert the purely move-related sounds
-                List<SoundFX> soundList = new List<SoundFX>
+                return new List<SoundFX>
                 {
                     GetWallSound(moveDetails.WallType),
                     moveDetails.Status == MoveDetails.MoveStatus.FAILURE ?
                                SoundFX.THOU_SHALT_NOT_PASS :
                                SoundFX.THOU_SHALT_PASS
                 };
-
-                // Next sounds: play again or welcome next player
-                if (moveDetails.PlayAgain)
-                {
-                    soundList.Add(SoundFX.PLAY_AGAIN);
-                }
-                else
-                {
-                    soundList.AddRange(GetWelcomeSounds(nextPlayer));
-                }
-                return soundList;
             }
         }
     }

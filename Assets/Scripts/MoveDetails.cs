@@ -7,7 +7,7 @@ namespace Tiboo
             SUCCESS_KNOWN,
             SUCCESS_NEW,
             FAILURE,
-            BORDER  // When attempting to move through the outer walls
+            ABORTED  // When attempting to move through the outer walls
         }
 
         public MoveStatus Status { get; set; }

@@ -107,7 +107,7 @@ public class BoardTest
         MoveDetails moveDetails = new MoveDetails(movingPlayer);
         board.Move(Tile.Direction.WEST, movingPlayer, null, moveDetails);
 
-        Assert.AreEqual(MoveDetails.MoveStatus.BORDER, moveDetails.Status);
+        Assert.AreEqual(MoveDetails.MoveStatus.ABORTED, moveDetails.Status);
         Assert.AreEqual(false, moveDetails.PlayAgain);
         Assert.AreSame(movingPlayer, moveDetails.Player);
     }

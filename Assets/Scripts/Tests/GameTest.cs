@@ -37,6 +37,24 @@ public class GameTest
     }
 
     [Test]
+    public void TestGameOver()
+    {
+        List<Player> players = new List<Player>()
+        {
+            new Player(Player.Animal.RABBIT, Player.Color.BLUE, new Player.Position(0, 0)),
+            new Player(Player.Animal.MOUSE, Player.Color.RED, new Player.Position(0, 0))
+        };
+        const int MAX_TURNS = 1;
+        Game game = new Game(players, new Board(), MAX_TURNS);
+        for (int count = 0; count < MAX_TURNS * players.Count; ++count)
+        {
+            Assert.False(game.GameOver());
+            game.NextPlayer();
+        }
+        Assert.True(game.GameOver());
+    }
+
+    [Test]
     public void TestPossibleRabbitMovements()
     {
         Board board = new Board();

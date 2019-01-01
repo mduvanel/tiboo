@@ -17,24 +17,6 @@ public class SoundMixerTest
     );
 
     [Test]
-    public void GetMoveSoundFXRabbitRabbitHolePlayAgain()
-    {
-        MoveDetails moveDetails = new MoveDetails(BLUE_RABBIT)
-        {
-            WallType = Wall.Type.RABBIT_HOLE,
-            Status = MoveDetails.MoveStatus.SUCCESS_KNOWN,
-            PlayAgain = true
-        };
-
-        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails, RED_MOUSE);
-
-        Assert.AreEqual(3, list.Count);
-        Assert.AreEqual(SoundMixer.SoundFX.RABBIT_HOLE, list[0]);
-        Assert.AreEqual(SoundMixer.SoundFX.THOU_SHALT_PASS, list[1]);
-        Assert.AreEqual(SoundMixer.SoundFX.PLAY_AGAIN, list[2]);
-    }
-
-    [Test]
     public void GetMoveSoundFXRabbitRabbitHole()
     {
         MoveDetails moveDetails = new MoveDetails(BLUE_RABBIT)
@@ -43,14 +25,11 @@ public class SoundMixerTest
             Status = MoveDetails.MoveStatus.SUCCESS_KNOWN
         };
 
-        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails, RED_MOUSE);
+        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails);
 
-        Assert.AreEqual(5, list.Count);
+        Assert.AreEqual(2, list.Count);
         Assert.AreEqual(SoundMixer.SoundFX.RABBIT_HOLE, list[0]);
         Assert.AreEqual(SoundMixer.SoundFX.THOU_SHALT_PASS, list[1]);
-        Assert.AreEqual(SoundMixer.SoundFX.HELLO, list[2]);
-        Assert.AreEqual(SoundMixer.SoundFX.RED_MOUSE, list[3]);
-        Assert.AreEqual(SoundMixer.SoundFX.WHERE_TO_GO, list[4]);
     }
 
     [Test]
@@ -62,14 +41,11 @@ public class SoundMixerTest
             Status = MoveDetails.MoveStatus.FAILURE
         };
 
-        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails, BLUE_RABBIT);
+        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails);
 
-        Assert.AreEqual(5, list.Count);
+        Assert.AreEqual(2, list.Count);
         Assert.AreEqual(SoundMixer.SoundFX.RABBIT_HOLE, list[0]);
         Assert.AreEqual(SoundMixer.SoundFX.THOU_SHALT_NOT_PASS, list[1]);
-        Assert.AreEqual(SoundMixer.SoundFX.HELLO, list[2]);
-        Assert.AreEqual(SoundMixer.SoundFX.BLUE_RABBIT, list[3]);
-        Assert.AreEqual(SoundMixer.SoundFX.WHERE_TO_GO, list[4]);
     }
 
     [Test]
@@ -81,14 +57,11 @@ public class SoundMixerTest
             Status = MoveDetails.MoveStatus.FAILURE
         };
 
-        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails, RED_MOUSE);
+        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails);
 
-        Assert.AreEqual(5, list.Count);
+        Assert.AreEqual(2, list.Count);
         Assert.AreEqual(SoundMixer.SoundFX.MOUSE_HOLE, list[0]);
         Assert.AreEqual(SoundMixer.SoundFX.THOU_SHALT_NOT_PASS, list[1]);
-        Assert.AreEqual(SoundMixer.SoundFX.HELLO, list[2]);
-        Assert.AreEqual(SoundMixer.SoundFX.RED_MOUSE, list[3]);
-        Assert.AreEqual(SoundMixer.SoundFX.WHERE_TO_GO, list[4]);
     }
 
     [Test]
@@ -100,14 +73,11 @@ public class SoundMixerTest
             Status = MoveDetails.MoveStatus.SUCCESS_KNOWN
         };
 
-        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails, BLUE_RABBIT);
+        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails);
 
-        Assert.AreEqual(5, list.Count);
+        Assert.AreEqual(2, list.Count);
         Assert.AreEqual(SoundMixer.SoundFX.MOUSE_HOLE, list[0]);
         Assert.AreEqual(SoundMixer.SoundFX.THOU_SHALT_PASS, list[1]);
-        Assert.AreEqual(SoundMixer.SoundFX.HELLO, list[2]);
-        Assert.AreEqual(SoundMixer.SoundFX.BLUE_RABBIT, list[3]);
-        Assert.AreEqual(SoundMixer.SoundFX.WHERE_TO_GO, list[4]);
     }
 
     [Test]
@@ -119,14 +89,11 @@ public class SoundMixerTest
             Status = MoveDetails.MoveStatus.SUCCESS_NEW
         };
 
-        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails, RED_MOUSE);
+        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails);
 
-        Assert.AreEqual(5, list.Count);
+        Assert.AreEqual(2, list.Count);
         Assert.AreEqual(SoundMixer.SoundFX.OPEN_WALL, list[0]);
         Assert.AreEqual(SoundMixer.SoundFX.THOU_SHALT_PASS, list[1]);
-        Assert.AreEqual(SoundMixer.SoundFX.HELLO, list[2]);
-        Assert.AreEqual(SoundMixer.SoundFX.RED_MOUSE, list[3]);
-        Assert.AreEqual(SoundMixer.SoundFX.WHERE_TO_GO, list[4]);
     }
 
     [Test]
@@ -138,14 +105,11 @@ public class SoundMixerTest
             Status = MoveDetails.MoveStatus.SUCCESS_NEW
         };
 
-        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails, BLUE_RABBIT);
+        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails);
 
-        Assert.AreEqual(5, list.Count);
+        Assert.AreEqual(2, list.Count);
         Assert.AreEqual(SoundMixer.SoundFX.OPEN_WALL, list[0]);
         Assert.AreEqual(SoundMixer.SoundFX.THOU_SHALT_PASS, list[1]);
-        Assert.AreEqual(SoundMixer.SoundFX.HELLO, list[2]);
-        Assert.AreEqual(SoundMixer.SoundFX.BLUE_RABBIT, list[3]);
-        Assert.AreEqual(SoundMixer.SoundFX.WHERE_TO_GO, list[4]);
     }
 
     [Test]
@@ -157,14 +121,11 @@ public class SoundMixerTest
             Status = MoveDetails.MoveStatus.FAILURE
         };
 
-        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails, RED_MOUSE);
+        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails);
 
-        Assert.AreEqual(5, list.Count);
+        Assert.AreEqual(2, list.Count);
         Assert.AreEqual(SoundMixer.SoundFX.CLOSED_WALL, list[0]);
         Assert.AreEqual(SoundMixer.SoundFX.THOU_SHALT_NOT_PASS, list[1]);
-        Assert.AreEqual(SoundMixer.SoundFX.HELLO, list[2]);
-        Assert.AreEqual(SoundMixer.SoundFX.RED_MOUSE, list[3]);
-        Assert.AreEqual(SoundMixer.SoundFX.WHERE_TO_GO, list[4]);
     }
 
     [Test]
@@ -176,14 +137,11 @@ public class SoundMixerTest
             Status = MoveDetails.MoveStatus.FAILURE
         };
 
-        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails, BLUE_RABBIT);
+        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails);
 
-        Assert.AreEqual(5, list.Count);
+        Assert.AreEqual(2, list.Count);
         Assert.AreEqual(SoundMixer.SoundFX.CLOSED_WALL, list[0]);
         Assert.AreEqual(SoundMixer.SoundFX.THOU_SHALT_NOT_PASS, list[1]);
-        Assert.AreEqual(SoundMixer.SoundFX.HELLO, list[2]);
-        Assert.AreEqual(SoundMixer.SoundFX.BLUE_RABBIT, list[3]);
-        Assert.AreEqual(SoundMixer.SoundFX.WHERE_TO_GO, list[4]);
     }
 
     [Test]
@@ -192,10 +150,10 @@ public class SoundMixerTest
         MoveDetails moveDetails = new MoveDetails(BLUE_RABBIT)
         {
             WallType = Wall.Type.CLOSED,
-            Status = MoveDetails.MoveStatus.BORDER
+            Status = MoveDetails.MoveStatus.ABORTED
         };
 
-        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails, null);
+        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails);
 
         Assert.AreEqual(1, list.Count);
         Assert.AreEqual(SoundMixer.SoundFX.BORDER, list[0]);
@@ -207,10 +165,10 @@ public class SoundMixerTest
         MoveDetails moveDetails = new MoveDetails(RED_MOUSE)
         {
             WallType = Wall.Type.CLOSED,
-            Status = MoveDetails.MoveStatus.BORDER
+            Status = MoveDetails.MoveStatus.ABORTED
         };
 
-        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails, null);
+        List<SoundMixer.SoundFX> list = SoundMixer.GetMoveSounds(moveDetails);
 
         Assert.AreEqual(1, list.Count);
         Assert.AreEqual(SoundMixer.SoundFX.BORDER, list[0]);
@@ -254,6 +212,7 @@ public class SoundMixerTest
         Assert.AreEqual(SoundMixer.SoundFX.RED_MOUSE, list[1]);
         Assert.AreEqual(SoundMixer.SoundFX.WHERE_TO_GO, list[2]);
     }
+
     [Test]
     public void GetHelloSoundsYellowMouse()
     {
@@ -269,5 +228,47 @@ public class SoundMixerTest
         Assert.AreEqual(SoundMixer.SoundFX.HELLO, list[0]);
         Assert.AreEqual(SoundMixer.SoundFX.YELLOW_MOUSE, list[1]);
         Assert.AreEqual(SoundMixer.SoundFX.WHERE_TO_GO, list[2]);
+    }
+
+    [Test]
+    public void GetNextPlayerSounds()
+    {
+        List<Player> players = new List<Player>() { BLUE_RABBIT, RED_MOUSE };
+        Game game = new Game(players, new Board(), 1);
+        MoveDetails moveDetails = new MoveDetails(RED_MOUSE);
+
+        List<SoundMixer.SoundFX> list = SoundMixer.GetNextPlayerSounds(moveDetails, game);
+
+        Assert.AreEqual(3, list.Count);
+        Assert.AreEqual(SoundMixer.SoundFX.HELLO, list[0]);
+        Assert.AreEqual(SoundMixer.SoundFX.BLUE_RABBIT, list[1]);
+        Assert.AreEqual(SoundMixer.SoundFX.WHERE_TO_GO, list[2]);
+    }
+
+    [Test]
+    public void GetNextPlayerSoundsPlayAgain()
+    {
+        List<Player> players = new List<Player>() { BLUE_RABBIT, RED_MOUSE };
+        Game game = new Game(players, new Board(), 1);
+        MoveDetails moveDetails = new MoveDetails(BLUE_RABBIT) { PlayAgain = true };
+
+        List<SoundMixer.SoundFX> list = SoundMixer.GetNextPlayerSounds(moveDetails, game);
+
+        Assert.AreEqual(1, list.Count);
+        Assert.AreEqual(SoundMixer.SoundFX.PLAY_AGAIN, list[0]);
+    }
+
+    [Test]
+    public void GetNextPlayerSoundsGameOver()
+    {
+        List<Player> players = new List<Player>() { BLUE_RABBIT, RED_MOUSE };
+        Game game = new Game(players, new Board(), 1);
+        game.NextPlayer();
+        game.NextPlayer();
+
+        List<SoundMixer.SoundFX> list = SoundMixer.GetNextPlayerSounds(null, game);
+
+        Assert.AreEqual(1, list.Count);
+        Assert.AreEqual(SoundMixer.SoundFX.DEFEAT, list[0]);
     }
 }
