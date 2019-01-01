@@ -49,6 +49,11 @@ namespace Tiboo
             {
                 // let the same player play again
                 m_currentPlayerAlreadyMoved = true;
+                moveDetails.PlayAgain = true;
+            }
+            else if (moveDetails.Status != MoveDetails.MoveStatus.BORDER)
+            {
+                NextPlayer();
             }
             return moveDetails;
         }

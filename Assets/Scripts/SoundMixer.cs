@@ -77,7 +77,7 @@ namespace Tiboo
             };
         }
 
-        public static List<SoundFX> GetMoveSounds(MoveDetails moveDetails)
+        public static List<SoundFX> GetMoveSounds(MoveDetails moveDetails, Player nextPlayer)
         {
             if (moveDetails.Status == MoveDetails.MoveStatus.BORDER)
             {
@@ -87,13 +87,25 @@ namespace Tiboo
             }
             else
             {
-                return new List<SoundFX>
+                // First insert the purely move-related sounds
+                List<SoundFX> soundList = new List<SoundFX>
                 {
                     GetWallSound(moveDetails.WallType),
                     moveDetails.Status == MoveDetails.MoveStatus.FAILURE ?
                                SoundFX.THOU_SHALT_NOT_PASS :
                                SoundFX.THOU_SHALT_PASS
                 };
+
+                // Next sounds: play again or welcome next player
+                if (moveDetails.PlayAgain)
+                {
+                    soundList.Add(SoundFX.PLAY_AGAIN);
+                }
+                else
+                {
+                    soundList.AddRange(GetWelcomeSounds(nextPlayer));
+                }
+                return soundList;
             }
         }
     }

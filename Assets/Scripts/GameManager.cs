@@ -70,7 +70,7 @@ namespace Tiboo
                     {
                         Debug.Log("Input detected : " + input);
                         m_soundManager.PlayAllSounds(SoundMixer.GetMoveSounds(
-                            m_game.Move(input)
+                            m_game.Move(input), m_game.CurrentPlayer()
                         ));
                         m_stateMachine.MoveNext(GameManagerStateMachine.Event.INPUT_RECEIVED);
                     }

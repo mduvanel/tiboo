@@ -13,10 +13,12 @@ namespace Tiboo
         public MoveStatus Status { get; set; }
         public Wall.Type WallType { get; set; }
         public Player Player { get; set; }
+        public bool PlayAgain { get; set; }
 
         public MoveDetails(Player player)
         {
             Player = player;
+            PlayAgain = false;
         }
     }
 }
