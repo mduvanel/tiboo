@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -65,7 +64,7 @@ namespace Tiboo
             }
 
             // Create member objects
-            m_game = new Game(players, BoardGenerator.GenerateBoard());
+            m_game = new Game(players, BoardGenerator.GenerateDummyBoard());
             m_stateMachine = new GameManagerStateMachine();
             m_soundManagerObject.SetActive(true);
             m_gameInputObject.SetActive(true);

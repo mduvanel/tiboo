@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Tiboo
 {
-	public static class BoardGenerator
+    public static class BoardGenerator
     {
         static readonly Dictionary<Wall.Type, int> WALLTYPE_COUNTS;
 
@@ -17,9 +16,10 @@ namespace Tiboo
                 { Wall.Type.MAGIC_DOOR, 3 },
                 { Wall.Type.CLOSED, 2 }
             };
+
         }
 
-        public static Board GenerateBoard()
+        public static Board GenerateDummyBoard()
         {
             Board board = new Board();
 
@@ -39,7 +39,32 @@ namespace Tiboo
                 }
             }
 
-			return board;
-		}
+            return board;
+        }
+
+        public static Board GenerateValidBoard(int magicDoors)
+        {
+            Board board = null;
+            do
+            {
+                board = GenerateBoard(magicDoors);
+            } while (!board.IsFullyConnected());
+
+            return board;
+        }
+
+        static Board GenerateBoard(int magicDoors)
+        {
+            if (magicDoors < 1 || magicDoors > WALLTYPE_COUNTS[Wall.Type.MAGIC_DOOR])
+            {
+                throw new System.Exception("Invalid number of magic doors requested: " + magicDoors);
+            }
+
+            Board board = new Board();
+
+            // TODO
+
+            return board;
+        }
 	}
 }

@@ -1,8 +1,28 @@
+using System.Collections.Generic;
+
 namespace Tiboo
 {
     public class Board
     {
-        private readonly Tile[,] m_tiles;
+        static readonly HashSet<Wall.Type> RABBIT_WALL_TYPES;
+        static readonly HashSet<Wall.Type> MOUSE_WALL_TYPES;
+
+        static Board()
+        {
+            RABBIT_WALL_TYPES = new HashSet<Wall.Type>()
+            {
+                Wall.Type.OPEN,
+                Wall.Type.RABBIT_HOLE
+            };
+
+            MOUSE_WALL_TYPES = new HashSet<Wall.Type>()
+            {
+                Wall.Type.OPEN,
+                Wall.Type.MOUSE_HOLE
+            };
+        }
+
+        readonly Tile[,] m_tiles;
 
         public int Height { get; set; }
         public int Width { get; set; }
@@ -77,6 +97,59 @@ namespace Tiboo
                     movingPlayer.Pos.Move(direction);
                 }
             }
+        }
+
+        public bool IsFullyConnected()
+        {
+            return IsFullyConnectedWithWallTypes(MOUSE_WALL_TYPES) &&
+                IsFullyConnectedWithWallTypes(RABBIT_WALL_TYPES);
+        }
+
+        bool IsFullyConnectedWithWallTypes(
+            HashSet<Wall.Type> validWallTypes
+        ) {
+            int tilesCount = Width * Height;
+
+            Queue<Player.Position> positionsToProcess = new Queue<Player.Position>();
+            positionsToProcess.Enqueue(new Player.Position(0, 0));
+            HashSet<Player.Position> processedPositions = new HashSet<Player.Position>();
+            List<Tile.Direction> possibleDirections = new List<Tile.Direction>
+            {
+                Tile.Direction.EAST,
+                Tile.Direction.WEST,
+                Tile.Direction.NORTH,
+                Tile.Direction.SOUTH
+            };
+
+            while ((positionsToProcess.Count > 0) &&
+                   (positionsToProcess.Count + processedPositions.Count < tilesCount))
+            {
+                Player.Position currentPosition = positionsToProcess.Dequeue();
+                Tile currentTile = GetTile(currentPosition.x, currentPosition.y);
+
+                // Check for all directions that apply if the tile can be reached
+                foreach (Tile.Direction direction in possibleDirections)
+                {
+                    Wall wall = currentTile.GetWall(direction);
+                    if (wall != null && validWallTypes.Contains(wall.WallType))
+                    {
+                        Player.Position newPosition = currentPosition.OffsetPosition(direction);
+
+                        // If the new position is neither in the processed set
+                        // or in the "to process" queue, enqueue it
+                        if (!processedPositions.Contains(newPosition) &&
+                            !positionsToProcess.Contains(newPosition))
+                        {
+                            positionsToProcess.Enqueue(newPosition);
+                        }
+                    }
+                }
+
+                // Rinse and repeat
+                processedPositions.Add(currentPosition);
+            }
+
+            return positionsToProcess.Count + processedPositions.Count == tilesCount;
         }
     }
 }

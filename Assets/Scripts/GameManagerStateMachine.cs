@@ -37,8 +37,8 @@ namespace Tiboo
             {
                 StateTransition other = obj as StateTransition;
                 return other != null &&
-                    this.m_currentState == other.m_currentState &&
-                    this.m_event == other.m_event;
+                    m_currentState == other.m_currentState &&
+                    m_event == other.m_event;
             }
         }
 

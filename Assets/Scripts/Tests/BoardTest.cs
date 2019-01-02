@@ -111,4 +111,18 @@ public class BoardTest
         Assert.AreEqual(false, moveDetails.PlayAgain);
         Assert.AreSame(movingPlayer, moveDetails.Player);
     }
+
+    [Test]
+    public void NewBoardIsNotFullyConnected()
+    {
+        Board board = new Board();
+        Assert.IsFalse(board.IsFullyConnected());
+    }
+
+    [Test]
+    public void DummyBoardIsFullyConnected()
+    {
+        Board board = BoardGenerator.GenerateDummyBoard();
+        Assert.IsTrue(board.IsFullyConnected());
+    }
 }
