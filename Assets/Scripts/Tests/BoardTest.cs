@@ -125,4 +125,25 @@ public class BoardTest
         Board board = BoardGenerator.GenerateDummyBoard();
         Assert.IsTrue(board.IsFullyConnected());
     }
+
+    [Test]
+    public void GeneratedBoardOneDoorIsFullyConnected()
+    {
+        Board board = BoardGenerator.GenerateValidBoard(1);
+        Assert.IsTrue(board.IsFullyConnected());
+    }
+
+    [Test]
+    public void GeneratedBoardTwoDoorsIsFullyConnected()
+    {
+        Board board = BoardGenerator.GenerateValidBoard(2);
+        Assert.IsTrue(board.IsFullyConnected());
+    }
+
+    [Test]
+    public void GeneratedBoardThreeDoorsIsFullyConnected()
+    {
+        Board board = BoardGenerator.GenerateValidBoard(3);
+        Assert.IsTrue(board.IsFullyConnected());
+    }
 }
