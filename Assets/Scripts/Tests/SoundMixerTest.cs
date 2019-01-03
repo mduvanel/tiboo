@@ -1,4 +1,4 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
 using Tiboo;
 
@@ -7,13 +7,13 @@ public class SoundMixerTest
     Player BLUE_RABBIT = new Player(
         Player.Animal.RABBIT,
         Player.Color.BLUE,
-        new Player.Position(0, 0)
+        new Position(0, 0)
     );
 
     Player RED_MOUSE = new Player(
         Player.Animal.MOUSE,
         Player.Color.RED,
-        new Player.Position(0, 0)
+        new Position(0, 0)
     );
 
     [Test]
@@ -191,7 +191,7 @@ public class SoundMixerTest
         Player player = new Player(
             Player.Animal.RABBIT,
             Player.Color.GREEN,
-            new Player.Position(0, 0)
+            new Position(0, 0)
         );
 
         List<SoundMixer.SoundFX> list = SoundMixer.GetWelcomeSounds(player);
@@ -219,7 +219,7 @@ public class SoundMixerTest
         Player player = new Player(
             Player.Animal.MOUSE,
             Player.Color.YELLOW,
-            new Player.Position(0, 0)
+            new Position(0, 0)
         );
 
         List<SoundMixer.SoundFX> list = SoundMixer.GetWelcomeSounds(player);

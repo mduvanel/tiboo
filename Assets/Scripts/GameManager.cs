@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tiboo
@@ -35,7 +35,7 @@ namespace Tiboo
                 players.Add(new Player(
                     Player.Animal.RABBIT,
                     Player.Color.GREEN,
-                    new Player.Position(0, 0)
+                    new Position(0, 0)
                 ));
             }
             if (m_blueRabbit != null)
@@ -43,7 +43,7 @@ namespace Tiboo
                 players.Add(new Player(
                     Player.Animal.RABBIT,
                     Player.Color.BLUE,
-                    new Player.Position(0, 3)
+                    new Position(0, 3)
                 ));
             }
             if (m_redMouse != null)
@@ -51,7 +51,7 @@ namespace Tiboo
                 players.Add(new Player(
                     Player.Animal.MOUSE,
                     Player.Color.RED,
-                    new Player.Position(3, 0)
+                    new Position(3, 0)
                 ));
             }
             if (m_yellowMouse != null)
@@ -59,7 +59,7 @@ namespace Tiboo
                 players.Add(new Player(
                     Player.Animal.MOUSE,
                     Player.Color.YELLOW,
-                    new Player.Position(3, 3)
+                    new Position(3, 3)
                 ));
             }
 

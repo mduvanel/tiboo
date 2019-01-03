@@ -102,7 +102,7 @@ public class BoardTest
         Player movingPlayer = new Player(
             Player.Animal.MOUSE,
             Player.Color.RED,
-            new Player.Position(0, 0)
+            new Position(0, 0)
         );
         MoveDetails moveDetails = new MoveDetails(movingPlayer);
         board.Move(Tile.Direction.WEST, movingPlayer, null, moveDetails);

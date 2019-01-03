@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Tiboo
 {
@@ -110,9 +110,9 @@ namespace Tiboo
         ) {
             int tilesCount = Width * Height;
 
-            Queue<Player.Position> positionsToProcess = new Queue<Player.Position>();
-            positionsToProcess.Enqueue(new Player.Position(0, 0));
-            HashSet<Player.Position> processedPositions = new HashSet<Player.Position>();
+            Queue<Position> positionsToProcess = new Queue<Position>();
+            positionsToProcess.Enqueue(new Position(0, 0));
+            HashSet<Position> processedPositions = new HashSet<Position>();
             List<Tile.Direction> possibleDirections = new List<Tile.Direction>
             {
                 Tile.Direction.EAST,
@@ -124,7 +124,7 @@ namespace Tiboo
             while ((positionsToProcess.Count > 0) &&
                    (positionsToProcess.Count + processedPositions.Count < tilesCount))
             {
-                Player.Position currentPosition = positionsToProcess.Dequeue();
+                Position currentPosition = positionsToProcess.Dequeue();
                 Tile currentTile = GetTile(currentPosition.x, currentPosition.y);
 
                 // Check for all directions that apply if the tile can be reached
@@ -133,7 +133,7 @@ namespace Tiboo
                     Wall wall = currentTile.GetWall(direction);
                     if (wall != null && validWallTypes.Contains(wall.WallType))
                     {
-                        Player.Position newPosition = currentPosition.OffsetPosition(direction);
+                        Position newPosition = currentPosition.OffsetPosition(direction);
 
                         // If the new position is neither in the processed set
                         // or in the "to process" queue, enqueue it

@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\GameManagerStateMachine.cs" />
     <Compile Include="Assets\Scripts\MoveDetails.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\Position.cs" />
     <Compile Include="Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\SoundMixer.cs" />
     <Compile Include="Assets\Scripts\Tile.cs" />
