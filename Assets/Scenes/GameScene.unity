@@ -298,6 +298,11 @@ Prefab:
       propertyPath: m_border
       value: 
       objectReference: {fileID: 8300000, guid: 70f935ca7e8d2444a8dfd923eacf0a1f, type: 3}
+    - target: {fileID: 114935519508274206, guid: 9b73f977603fa4bfaab71a6a4a019c34,
+        type: 2}
+      propertyPath: m_playAgain
+      value: 
+      objectReference: {fileID: 8300000, guid: 9fb8154c3ba9848ff81b212f47ec1834, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b73f977603fa4bfaab71a6a4a019c34, type: 2}
   m_IsPrefabAsset: 0

@@ -22,6 +22,7 @@ namespace Tiboo
         public AudioClip m_rabbitHole;
         public AudioClip m_mouseHole;
         public AudioClip m_magicDoor;
+        public AudioClip m_playAgain;
         public AudioClip m_border;
         public AudioClip m_victory;
         public AudioClip m_defeat;
@@ -47,6 +48,7 @@ namespace Tiboo
                 { SoundMixer.SoundFX.RABBIT_HOLE, m_rabbitHole },
                 { SoundMixer.SoundFX.MOUSE_HOLE, m_mouseHole },
                 { SoundMixer.SoundFX.MAGIC_DOOR, m_magicDoor },
+                { SoundMixer.SoundFX.PLAY_AGAIN, m_playAgain },
                 { SoundMixer.SoundFX.BORDER, m_border },
                 { SoundMixer.SoundFX.VICTORY, m_victory },
                 { SoundMixer.SoundFX.DEFEAT, m_defeat }
@@ -68,16 +70,13 @@ namespace Tiboo
         {
             if (m_audioSource.isPlaying)
             {
-                Debug.Log("Playing clip " + m_audioSource.clip.name);
                 return;
             }
             if (m_soundsToPlay.Count > 0)
             {
                 try
                 {
-                    Debug.Log("Next sound to play : " + m_soundsToPlay[0]);
                     m_audioSource.clip = m_clips[m_soundsToPlay[0]];
-                    Debug.Log("Starting clip " + m_audioSource.clip.name);
                     m_audioSource.Play();
                     m_soundsToPlay.RemoveAt(0);
                 }
