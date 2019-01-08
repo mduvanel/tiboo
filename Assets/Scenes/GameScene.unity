@@ -273,6 +273,31 @@ Prefab:
       propertyPath: m_audioSource
       value: 
       objectReference: {fileID: 390574376}
+    - target: {fileID: 114935519508274206, guid: 9b73f977603fa4bfaab71a6a4a019c34,
+        type: 2}
+      propertyPath: m_closedWall
+      value: 
+      objectReference: {fileID: 8300000, guid: 202ea8a830a0b42778831a2a25d5c45d, type: 3}
+    - target: {fileID: 114935519508274206, guid: 9b73f977603fa4bfaab71a6a4a019c34,
+        type: 2}
+      propertyPath: m_openWall
+      value: 
+      objectReference: {fileID: 8300000, guid: 7f88b23c697cd4b59893f05d2a6b484f, type: 3}
+    - target: {fileID: 114935519508274206, guid: 9b73f977603fa4bfaab71a6a4a019c34,
+        type: 2}
+      propertyPath: m_mouseHole
+      value: 
+      objectReference: {fileID: 8300000, guid: 7a22823a95ecb4d3885f0435f7c4ecbe, type: 3}
+    - target: {fileID: 114935519508274206, guid: 9b73f977603fa4bfaab71a6a4a019c34,
+        type: 2}
+      propertyPath: m_rabbitHole
+      value: 
+      objectReference: {fileID: 8300000, guid: 4e8e30a71e21c49b8a41aa8b7a96f6db, type: 3}
+    - target: {fileID: 114935519508274206, guid: 9b73f977603fa4bfaab71a6a4a019c34,
+        type: 2}
+      propertyPath: m_border
+      value: 
+      objectReference: {fileID: 8300000, guid: 70f935ca7e8d2444a8dfd923eacf0a1f, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b73f977603fa4bfaab71a6a4a019c34, type: 2}
   m_IsPrefabAsset: 0
