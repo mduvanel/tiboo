@@ -2,7 +2,29 @@ using System.Collections.Generic;
 
 namespace Tiboo
 {
-	public class Wall
+    static class TypeExtensions
+    {
+        public static char ToChar(this Wall.Type type)
+        {
+            switch(type)
+            {
+                case Wall.Type.OPEN:
+                    return 'O';
+                case Wall.Type.CLOSED:
+                    return 'C';
+                case Wall.Type.MOUSE_HOLE:
+                    return 'M';
+                case Wall.Type.RABBIT_HOLE:
+                    return 'R';
+                case Wall.Type.MAGIC_DOOR:
+                    return 'D';
+                default:
+                    return 'X';
+            }
+        }
+    }
+
+    public class Wall
 	{
 		public enum Type
 		{
@@ -14,7 +36,7 @@ namespace Tiboo
 		}
 
         public Type WallType { get; set; }
-        private bool m_traversed;
+        bool m_traversed;
 
         public Wall(Type type)
         {
@@ -56,11 +78,5 @@ namespace Tiboo
 
             m_traversed = moveDetails.Status != MoveDetails.MoveStatus.FAILURE;
         }
-
-		// Generate random walls in the given game board with the given number of magic doors
-		static void GenerateWalls(Board board, int magicDoors = 1)
-		{
-
-		}
 	}
 }

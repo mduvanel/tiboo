@@ -5,6 +5,8 @@ namespace Tiboo
 {
     public class GameManager : MonoBehaviour
     {
+        static int MAGIC_DOORS = 1;
+
         // GameObjects
         public GameObject m_greenRabbit;
         public GameObject m_blueRabbit;
@@ -64,7 +66,9 @@ namespace Tiboo
             }
 
             // Create member objects
-            m_game = new Game(players, BoardGenerator.GenerateDummyBoard());
+            Board board = BoardGenerator.GenerateValidBoard(MAGIC_DOORS);
+            Debug.Log(board.GetBoardWallsDescription());
+            m_game = new Game(players, board);
             m_stateMachine = new GameManagerStateMachine();
             m_soundManagerObject.SetActive(true);
             m_gameInputObject.SetActive(true);
@@ -107,10 +111,6 @@ namespace Tiboo
                         m_stateMachine.MoveNext(
                             GameManagerStateMachine.Event.SOUND_FINISHED
                         );
-                    }
-                    else
-                    {
-                        Debug.Log("Waiting for sound to finish playing...");
                     }
                     break;
                 default:

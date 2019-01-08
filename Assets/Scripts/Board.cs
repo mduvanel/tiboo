@@ -151,5 +151,39 @@ namespace Tiboo
 
             return positionsToProcess.Count + processedPositions.Count == tilesCount;
         }
+
+        public string GetBoardWallsDescription()
+        {
+            string result = "";
+            for (int y = 0; y < Height; y++)
+            {
+                string firstLine = "", secondLine = "";
+                for (int x = 0; x < Width; x++)
+                {
+                    Tile tile = GetTile(x, y);
+                    firstLine += "   ";
+                    if (x < Width - 1)
+                    {
+                        firstLine += tile.GetWall(Tile.Direction.EAST).WallType.ToChar();
+                    }
+
+                    if (y < Height - 1)
+                    {
+                        secondLine += tile.GetWall(Tile.Direction.SOUTH).WallType.ToChar();
+                        if (x < Width - 1)
+                        {
+                            secondLine += "+";
+                        }
+                    }
+                }
+
+                result += firstLine + '\n';
+                if (y < Height - 1)
+                {
+                    result += secondLine + '\n';
+                }
+            }
+            return result;
+        }
     }
 }
